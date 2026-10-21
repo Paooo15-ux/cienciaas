@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desarrollo: fundamento científico</title>
+<style>
+  
+/* ===== Colores (cámbialos aquí y cambia toda la página) ===== */
+:root{
+  --fondo:#f1f7f3;      /* fondo de la página */
+  --suave:#dcece3;      /* verde muy clarito */
+  --medio:#8fc2a6;      /* verde suave */
+  --fuerte:#4f8a6b;     /* verde para títulos y botones */
+  --oscuro:#2f5d47;     /* texto de títulos */
+  --texto:#2b3a32;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;line-height:1.6;background:var(--fondo);color:var(--texto)}
+header{background:var(--fuerte);color:#fff;padding:1rem 6vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+header a{color:#fff;margin-left:1rem;text-decoration:none}
+header a.activo{border-bottom:2px solid #fff}
+.portada{background:var(--suave);padding:2.5rem 6vw;text-align:center}
+.portada h1{margin:0 0 .5rem;color:var(--oscuro)}
+.portada p{max-width:650px;margin:0 auto}
+main{max-width:980px;margin:auto;padding:1rem 5vw 2rem}
+h2{color:var(--oscuro);border-bottom:3px solid var(--medio);padding-bottom:.3rem;margin-top:2.5rem}
+h3{color:var(--fuerte);margin:0 0 .4rem}
+
+/* Tarjetas */
+.grupo{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1rem 0}
+.tarjeta{background:#fff;border-radius:12px;padding:1rem 1.2rem;border-top:5px solid var(--medio);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tarjeta p{margin:0}
+.caja{background:#fff;border-radius:12px;padding:1.2rem;margin:1rem 0;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+
+/* Botones y textos de ayuda */
+button{font:inherit;padding:.45rem .9rem;border:2px solid var(--fuerte);background:#fff;color:var(--oscuro);border-radius:8px;cursor:pointer;margin:.2rem .2rem .2rem 0}
+button:hover{background:var(--suave)}
+button.activo{background:var(--fuerte);color:#fff}
+button:disabled{opacity:.4;cursor:default}
+.info{background:var(--suave);border-radius:8px;padding:.8rem 1rem;margin:.8rem 0;min-height:4rem}
+
+/* Dibujos SVG */
+svg{width:100%;height:auto;display:block}
+svg text{font-size:13px;fill:var(--texto)}
+.linea{fill:none;stroke:var(--medio);stroke-width:4;stroke-linecap:round}
+.linea.activa{stroke:var(--oscuro);stroke-width:7}
+.guia{stroke:#bbb;stroke-dasharray:4 4}
+.neurona{fill:var(--medio)}
+.neurona2{fill:#b5dac6}
+.vesicula{fill:#fff;stroke:var(--fuerte);stroke-width:2}
+.nt{fill:#f2b84b}
+.ca{fill:#e58a5b}
+.na{fill:#fff;stroke:var(--oscuro);stroke-width:2}
+.receptor{fill:var(--oscuro)}
+.receptor.abierto{fill:#f2b84b}
+.enzima{fill:#9a86c8}
+.paso{opacity:0;transition:opacity .3s}
+.paso.ver{opacity:1}
+
+/* Ruta del impulso */
+.ruta button{margin-right:.4rem}
+footer{background:var(--suave);padding:1rem 6vw;font-size:.9rem}
+body {
+    animation: entrada 2.0s ease;
+}
+
+@keyframes entrada {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <strong>Sistema nervioso</strong>
+  <nav>
+    <a href="index.html">Inicio / Encabezado</a>
+    <a href="juegos.html">Zona Interactiva</a>
+  </nav>
+</header>
+
+<div class="portada">
+  <h1>Desarrollo: fundamento científico</h1>
+  <p>Cómo el sistema nervioso genera, transmite e integra las señales eléctricas y químicas que nos permiten sentir y responder.</p>
+</div>
+
+<main>
+
+<!-- ============ 1. NEURONA Y POTENCIAL DE ACCIÓN ============ -->
+<h2>La neurona y el potencial de acción</h2>
+<p>La neurona es la célula del sistema nervioso que recibe, conduce y transmite señales. Su membrana mantiene una diferencia de carga entre el interior y el exterior, y de ahí nace el impulso nervioso.</p>
+
+<div class="grupo">
+  <div class="tarjeta"><h3>Partes de la neurona</h3>
+    <p><b>Dendritas:</b> reciben señales. <b>Soma:</b> contiene el núcleo. <b>Axón:</b> conduce el impulso. <b>Mielina:</b> aísla el axón y acelera la señal. <b>Terminales:</b> liberan neurotransmisores.</p></div>
+  <div class="tarjeta"><h3>Potencial de reposo</h3>
+    <p>Con la neurona en reposo, el interior es negativo respecto al exterior (≈ −70 mV). Hay más Na⁺ afuera y más K⁺ adentro.</p></div>
+  <div class="tarjeta"><h3>Bomba sodio-potasio</h3>
+    <p>Usa 1 ATP para sacar 3 Na⁺ e ingresar 2 K⁺. Así mantiene los gradientes que hacen posible cada impulso.</p></div>
+</div>
+
+<div class="caja">
+  <h3>Fases del potencial de acción</h3>
+  <p>Toca un botón para ver cada fase en la gráfica.</p>
+  <div id="botones-fase"></div>
+  <svg viewBox="0 0 600 260">
+    <line x1="50" y1="93" x2="590" y2="93" class="guia"/>
+    <line x1="50" y1="177" x2="590" y2="177" class="guia"/>
+    <text x="5" y="45">+35</text><text x="5" y="97">0</text><text x="5" y="181">−55</text><text x="5" y="204">−70</text>
+    <text x="590" y="171" text-anchor="end">umbral</text>
+    <text x="320" y="250" text-anchor="middle">Tiempo (unos 2 ms)</text>
+    <path id="f0" class="linea" d="M50,200 H110 M340,200 H580"/>
+    <path id="f1" class="linea" d="M110,200 Q135,195 150,177"/>
+    <path id="f2" class="linea" d="M150,177 C165,125 175,60 190,40"/>
+    <path id="f3" class="linea" d="M190,40 C212,60 232,170 262,214"/>
+    <path id="f4" class="linea" d="M262,214 C275,230 300,228 340,200"/>
+  </svg>
+  <div class="info" id="info-fase"></div>
+</div>
+
+<div class="grupo">
+  <div class="tarjeta"><h3>Ley del todo o nada</h3>
+    <p>Si el estímulo no llega al umbral (≈ −55 mV), no hay impulso. Si llega, el impulso siempre tiene el mismo tamaño.</p></div>
+  <div class="tarjeta"><h3>Conducción</h3>
+    <p>Después de un impulso hay un periodo refractario, por eso la señal avanza en una sola dirección. En axones con mielina la señal “salta” entre los nodos de Ranvier y puede superar los 100 m/s.</p></div>
+</div>
+
+<!-- ============ 2. SINAPSIS Y NEUROTRANSMISORES ============ -->
+<h2>Sinapsis y neurotransmisores</h2>
+<p>La sinapsis es el punto donde una neurona se comunica con otra célula (neurona, músculo o glándula).</p>
+
+<div class="grupo">
+  <div class="tarjeta"><h3>Sinapsis eléctrica</h3>
+    <p>Las células están unidas por uniones comunicantes y los iones pasan directamente de una a otra. Es muy rápida y puede ir en ambos sentidos.</p></div>
+  <div class="tarjeta"><h3>Sinapsis química</h3>
+    <p>Es la más común. La señal cruza una hendidura de 20–40 nm usando neurotransmisores. Va en un solo sentido y se puede modular.</p></div>
+</div>
+
+<h3>Neurotransmisores principales</h3>
+<div class="grupo">
+  <div class="tarjeta"><h3>Acetilcolina</h3><p>Contracción muscular y memoria.</p></div>
+  <div class="tarjeta"><h3>Glutamato</h3><p>Principal excitador del cerebro; aprendizaje.</p></div>
+  <div class="tarjeta"><h3>GABA</h3><p>Principal inhibidor del cerebro.</p></div>
+  <div class="tarjeta"><h3>Dopamina</h3><p>Movimiento, motivación y recompensa.</p></div>
+  <div class="tarjeta"><h3>Serotonina</h3><p>Estado de ánimo, sueño y apetito.</p></div>
+  <div class="tarjeta"><h3>Noradrenalina</h3><p>Alerta y respuesta al estrés.</p></div>
+</div>
+<div class="caja"><h3>Excitación e inhibición</h3>
+  <p>Un neurotransmisor excitador acerca a la neurona al umbral (PEPS); uno inhibidor la aleja (PIPS). La neurona suma todas las señales y solo dispara si llega al umbral.</p></div>
+
+<!-- ============ 3. INTEGRACIÓN ============ -->
+<h2>Integración del impulso nervioso</h2>
+<p>De la recepción sensorial a la respuesta motora. Toca cada paso:</p>
+<div class="caja">
+  <div class="ruta" id="ruta"></div>
+  <div class="info" id="info-ruta"></div>
+</div>
+<div class="grupo">
+  <div class="tarjeta"><h3>Arco reflejo</h3>
+    <p>Es la respuesta involuntaria más simple: receptor, neurona sensitiva, médula espinal, neurona motora y efector. En el reflejo rotuliano hay una sola sinapsis.</p></div>
+  <div class="tarjeta"><h3>Procesamiento central</h3>
+    <p>En las respuestas voluntarias la información llega al tálamo y a la corteza cerebral, donde se interpreta y se decide la respuesta; luego baja por las neuronas motoras.</p></div>
+</div>
+
+<!-- ============ 4. INFOGRAFÍA ============ -->
+<h2>Infografía: la sinapsis química</h2>
+<p>Avanza paso a paso para ver cómo el impulso pasa de una neurona a otra.</p>
+<div class="caja">
+  <svg viewBox="0 0 600 310">
+    <rect x="100" y="12" width="400" height="128" rx="40" class="neurona"/>
+    <rect x="100" y="192" width="400" height="108" rx="30" class="neurona2"/>
+    <text x="125" y="36">Neurona presináptica</text>
+    <text x="125" y="288">Neurona postsináptica</text>
+    <text x="480" y="170" text-anchor="end">Hendidura sináptica</text>
+
+    <!-- Cada grupo "paso" tiene data-pasos: los pasos donde se ve -->
+    <g class="paso" data-pasos="1,2"><path d="M300,52 H470" class="linea"/><text x="300" y="72">Potencial de acción</text></g>
+    <g class="paso" data-pasos="2,3"><circle cx="167" cy="118" r="5" class="ca"/><circle cx="172" cy="102" r="5" class="ca"/><circle cx="433" cy="116" r="5" class="ca"/><circle cx="428" cy="100" r="5" class="ca"/><text x="190" y="112">Ca²⁺ entra</text></g>
+    <g class="paso" data-pasos="1,2"><circle cx="230" cy="92" r="14" class="vesicula"/><circle cx="300" cy="104" r="14" class="vesicula"/><circle cx="370" cy="92" r="14" class="vesicula"/></g>
+    <g class="paso" data-pasos="3,4,5,6"><circle cx="230" cy="132" r="14" class="vesicula"/><circle cx="300" cy="132" r="14" class="vesicula"/><circle cx="370" cy="132" r="14" class="vesicula"/></g>
+    <g class="paso" data-pasos="4,5"><circle cx="220" cy="156" r="4" class="nt"/><circle cx="244" cy="166" r="4" class="nt"/><circle cx="290" cy="154" r="4" class="nt"/><circle cx="312" cy="170" r="4" class="nt"/><circle cx="360" cy="158" r="4" class="nt"/><circle cx="382" cy="168" r="4" class="nt"/></g>
+    <g class="paso" data-pasos="6"><circle cx="230" cy="154" r="4" class="nt"/><circle cx="380" cy="154" r="4" class="nt"/><rect x="290" y="158" width="18" height="12" class="enzima"/><text x="316" y="168">Enzima</text></g>
+    <rect x="205" y="186" width="16" height="10" class="receptor"/><rect x="285" y="186" width="16" height="10" class="receptor"/><rect x="365" y="186" width="16" height="10" class="receptor"/>
+    <g class="paso" data-pasos="5"><circle cx="213" cy="214" r="5" class="na"/><circle cx="293" cy="220" r="5" class="na"/><circle cx="373" cy="214" r="5" class="na"/><text x="400" y="232">Na⁺ entra: PEPS</text></g>
+  </svg>
+  <p><small>Amarillo: neurotransmisor · Naranja: Ca²⁺ · Blanco: Na⁺ · Círculos blancos: vesículas</small></p>
+  <div class="info" id="info-sinapsis"></div>
+  <button id="btn-ant">Anterior</button>
+  <button id="btn-sig" class="activo">Siguiente</button>
+  <span id="num-paso"></span>
+</div>
+
+</main>
+<footer>Referencias sugeridas: Guyton y Hall, <i>Tratado de fisiología médica</i>; Kandel, <i>Principios de neurociencia</i>; Purves, <i>Neurociencia</i>.</footer>
+
+<script>
+/* ===== 1. Fases del potencial de acción ===== */
+const fases = [
+  ["Reposo", "La membrana está en ≈ −70 mV. La bomba Na⁺/K⁺ mantiene más Na⁺ afuera y más K⁺ adentro."],
+  ["Estímulo y umbral", "Se abren algunos canales de Na⁺ y el voltaje sube. Al llegar a ≈ −55 mV se dispara el potencial de acción."],
+  ["Despolarización", "Se abren muchos canales de Na⁺. El Na⁺ entra y el interior se vuelve positivo (≈ +35 mV)."],
+  ["Repolarización", "Los canales de Na⁺ se inactivan y se abren los de K⁺. El K⁺ sale y el voltaje vuelve a bajar."],
+  ["Hiperpolarización", "Los canales de K⁺ tardan en cerrarse y el voltaje baja a ≈ −80 mV. Luego se vuelve al reposo."]
+];
+const botonesFase = document.getElementById("botones-fase");
+const infoFase = document.getElementById("info-fase");
+
+function mostrarFase(i) {
+  for (let k = 0; k < fases.length; k++) {
+    document.getElementById("f" + k).classList.toggle("activa", k === i);
+    botonesFase.children[k].classList.toggle("activo", k === i);
+  }
+  infoFase.innerHTML = "<b>" + fases[i][0] + ".</b> " + fases[i][1];
+}
+fases.forEach(function (fase, i) {
+  const b = document.createElement("button");
+  b.textContent = fase[0];
+  b.onclick = function () { mostrarFase(i); };
+  botonesFase.appendChild(b);
+});
+mostrarFase(0);
+
+/* ===== 2. Ruta del impulso ===== */
+const ruta = [
+  ["Receptor", "Células sensoriales detectan el estímulo y lo convierten en señal eléctrica."],
+  ["Neurona sensitiva", "Lleva el impulso hacia el sistema nervioso central."],
+  ["Centro integrador", "En la médula o el encéfalo se procesa la información y se decide la respuesta."],
+  ["Neurona motora", "Lleva la orden desde el sistema nervioso central hacia el órgano que responde."],
+  ["Efector", "Un músculo se contrae o una glándula secreta: es la respuesta final."]
+];
+const contRuta = document.getElementById("ruta");
+const infoRuta = document.getElementById("info-ruta");
+
+function mostrarRuta(i) {
+  for (let k = 0; k < ruta.length; k++) {
+    contRuta.children[k].classList.toggle("activo", k === i);
+  }
+  infoRuta.innerHTML = "<b>" + (i + 1) + ". " + ruta[i][0] + ".</b> " + ruta[i][1];
+}
+ruta.forEach(function (paso, i) {
+  const b = document.createElement("button");
+  b.textContent = paso[0];
+  b.onclick = function () { mostrarRuta(i); };
+  contRuta.appendChild(b);
+});
+mostrarRuta(0);
+
+/* ===== 3. Sinapsis paso a paso ===== */
+const pasosSinapsis = [
+  "El potencial de acción llega al terminal presináptico.",
+  "Se abren canales de Ca²⁺ y el calcio entra al terminal.",
+  "El Ca²⁺ hace que las vesículas se unan a la membrana.",
+  "El neurotransmisor se libera en la hendidura sináptica.",
+  "El neurotransmisor se une a los receptores, entra Na⁺ y se genera un PEPS.",
+  "La señal termina: el neurotransmisor se recapta o una enzima lo degrada."
+];
+let pasoActual = 1;
+const infoSinapsis = document.getElementById("info-sinapsis");
+const btnAnt = document.getElementById("btn-ant");
+const btnSig = document.getElementById("btn-sig");
+
+function mostrarPaso(n) {
+  pasoActual = n;
+  document.querySelectorAll(".paso").forEach(function (g) {
+    const lista = g.dataset.pasos.split(",").map(Number);
+    g.classList.toggle("ver", lista.includes(n));
+  });
+  document.querySelectorAll(".receptor").forEach(function (r) {
+    r.classList.toggle("abierto", n === 5);
+  });
+  infoSinapsis.innerHTML = "<b>Paso " + n + ".</b> " + pasosSinapsis[n - 1];
+  document.getElementById("num-paso").textContent = n + " de " + pasosSinapsis.length;
+  btnAnt.disabled = (n === 1);
+  btnSig.disabled = (n === pasosSinapsis.length);
+}
+btnAnt.onclick = function () { mostrarPaso(pasoActual - 1); };
+btnSig.onclick = function () { mostrarPaso(pasoActual + 1); };
+mostrarPaso(1);
+</script>
+</body>
+</html>

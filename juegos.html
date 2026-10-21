@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisiología del sistema nervioso</title>
+
+    <style>
+
+        /* ===== PALETA DE COLORES (cambia los colores aquí) ===== */
+        :root {
+            --fondo: #f1f7f3;   /* fondo de la página */
+            --suave: #dcece3;   /* verde muy clarito */
+            --medio: #8fc2a6;   /* verde suave */
+            --fuerte: #4f8a6b;  /* verde para botones y detalles */
+            --oscuro: #2f5d47;  /* títulos */
+            --texto: #2b3a32;   /* texto general */
+        }
+
+.barraEnlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: auto;
+            background: var(--suave);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(47, 93, 71, 0.25);
+        }
+
+        header {
+            text-align: center;
+            background: var(--medio);
+            padding: 22px;
+            border-radius: 12px;
+        }
+
+        header a {
+            color: var(--oscuro);
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        header a:hover {
+            color: var(--texto);
+        }
+
+        h1, h2, h3 {
+            color: var(--oscuro);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .subtitulo {
+            line-height: 1.6;
+        }
+
+        .seccion {
+            margin-top: 28px;
+            padding: 20px;
+            background: var(--medio);
+            border: 1px solid var(--fuerte);
+            border-radius: 12px;
+        }
+
+        .marcador {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: var(--suave);
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .columnas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tarjeta {
+            min-height: 62px;
+            padding: 13px;
+            margin: 10px 0;
+            border: 2px solid var(--fuerte);
+            background: #fff;
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tarjeta:hover:not(.correcta) {
+            background: var(--suave);
+            border-color: var(--oscuro);
+        }
+
+        .seleccionada {
+            background: var(--oscuro);
+            border-color: var(--oscuro);
+            color: #fff;
+        }
+
+        /* Si la tarjeta está seleccionada, el hover no cambia su color */
+        .tarjeta.seleccionada:hover:not(.correcta) {
+            background: var(--oscuro);
+            color: #fff;
+        }
+
+        .correcta {
+            background: #d3f2de;
+            border-color: #2e9e5b;
+            cursor: default;
+        }
+
+        .incorrecta {
+            background: #ffe0e0;
+            border-color: #d95c5c;
+        }
+
+        #mensaje, #mensajeQuiz {
+            text-align: center;
+            min-height: 25px;
+            font-weight: bold;
+            margin-top: 18px;
+        }
+
+        .barra {
+            height: 13px;
+            background: var(--fondo);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        #progreso {
+            height: 100%;
+            width: 0%;
+            background: var(--fuerte);
+            transition: width 0.3s;
+        }
+
+        .dato {
+            background: var(--suave);
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .pregunta {
+            background: white;
+            border: 1px solid var(--suave);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .opcion {
+            display: block;
+            padding: 10px;
+            margin: 7px 0;
+            background: var(--fondo);
+            color: var(--texto);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .opcion:hover {
+            background: var(--suave);
+        }
+
+        input[type="radio"] {
+            accent-color: var(--fuerte);
+            margin-right: 8px;
+        }
+
+        button {
+            background: var(--fuerte);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: var(--oscuro);
+        }
+
+.botones {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .boton-enlace {
+            display: inline-block;
+            background: var(--fuerte);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 8px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .boton-enlace:hover {
+            background: var(--oscuro);
+            transform: translateY(-2px);
+        }
+
+        .secundario {
+            background: var(--fondo);
+            color: var(--oscuro);
+            border: 2px solid var(--fuerte);
+        }
+
+        .secundario:hover {
+            background: var(--suave);
+            color: var(--oscuro);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--oscuro);
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 650px) {
+            .columnas {
+                grid-template-columns: 1fr;
+            }
+
+            .contenedor {
+                padding: 12px;
+            }
+
+            .seccion {
+                padding: 13px;
+            }
+            
+    }
+    </style>
+
+    <style>body {
+    animation: entrada 2.0s ease;
+}
+
+@keyframes entrada {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}</style>
+    
+
+</style>
+</head>
+
+<body>
+    <div class barraEnlaces>
+   <header>
+  <strong>Sistema nervioso</strong>
+  <nav>
+    <a href="index.html">Inicio / Encabezado</a>
+    <a href="desarrollo-simple.html">Fundamento Científico </a>
+  </nav>
+</header>
+</div>
+
+<div class="contenedor">
+
+    <header>
+        <h1> Fisiología general del sistema nervioso</h1>
+        <p class="subtitulo">
+            Aprende cómo funciona el sistema nervioso y refuerza tus conocimientos.
+        </p>
+        <p>Explora los recursos y evalúa tus conocimientos.</p>
+    </header>
+
+    <section class="seccion">
+        <h2> ¿Qué es el sistema nervioso?</h2>
+
+        <p>
+            Es el sistema que recibe información, la procesa y
+            coordina las respuestas del cuerpo. Nos permite sentir,
+            pensar, movernos y reaccionar a lo que sucede a nuestro alrededor.
+        </p>
+
+        <div class="dato">
+            <strong>¿Cómo funciona?</strong>
+            <p>
+                1. Los receptores captan estímulos, como el calor.
+            </p>
+            <p>
+                2. Los nervios llevan información al sistema nervioso.
+            </p>
+            <p>
+                3. El sistema nervioso procesa la información.
+            </p>
+            <p>
+                4. El cuerpo produce una respuesta.
+            </p>
+        </div>
+    </section>
+    <section class="seccion" id="actividades">
+        <h2>Actividades y evaluación</h2>
+        <p>Selecciona una opción para continuar con las actividades sobre el sistema nervioso.</p>
+        <div class="botones">
+            <a class="boton-enlace" href="https://view.genially.com/6ad7e3863ab266d718eab5ed" target="_blank" rel="noopener noreferrer">Ir a Genially</a>
+            <a class="boton-enlace" href="https://docs.google.com/forms/d/e/1FAIpQLSdBeoLExdnVcjfKyqAziRG36lzPC53YGvnDseKxT_ZNA7t5qA/viewform?usp=header" target="_blank" rel="noopener noreferrer">Ir a Google Forms</a>
+        </div>
+    </section>
+
+    <footer>
+    Fisiología general del sistema nervioso
+    </footer>
+
+</div>
+
+</body>
+</html>
